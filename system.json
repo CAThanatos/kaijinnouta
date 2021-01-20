@@ -22,8 +22,8 @@
   "gridUnits": "ft",
   "primaryTokenAttribute": "health",
   "secondaryTokenAttribute": "power",
-  "url": "",
-  "manifest": "",
-  "download": "",
+  "url": "https://https://github.com/CAThanatos/kaijinnouta",
+  "manifest": "https://raw.githubusercontent.com/CAThanatos/kaijinnouta/master/system.json",
+  "download": "https://github.com/CAThanatos/kaijinnouta/releases/download/1.0.4/kaijinnouta-master.zip",
   "license": "LICENSE.txt"
 }
