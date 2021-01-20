@@ -1,0 +1,525 @@
+<form class="{{cssClass}} flexcol" autocomplete="off">
+
+    {{!-- Sheet Header --}}
+    <header class="sheet-header">
+      <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100"/>
+
+      <div class="flexcol">
+        <div class="header-fields flexrow">
+          <div class="charname">
+            <h1><input name="name" type="text" value="{{actor.name}}" placeholder="Name"/></h1>
+          </div>
+          {{#if isCharacter}}
+          <div class="skill-points-div">
+            <table class="table-skill-points">
+              <thead>
+                <tr>
+                  <th>PC</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <div class="skill-points flexrow">
+                      <input class="input-skill-points" type="number" name="data.attributes.skill_points.used" value="{{data.attributes.skill_points.used}}" data-dtype="Number"/>
+                      <div>/</div>
+                      <input class="input-skill-points" type="number" name="data.attributes.skill_points.max" value="{{data.attributes.skill_points.max}}" data-dtype="Number"/>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          {{/if}}
+        </div>
+        <div class="ressources">
+          <table class="ressources-table">
+            <thead>
+              <tr>
+                <th><a class="rollable" data-type="initiative">Initiative</a></th>
+                <th>Energie</th>
+                <th><a class="rollable" data-type="luck">Chance</a></th>
+                <th>Résistance</th>
+                <th>Santé</th>
+                <th>Flétrissure</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <input class="input-initiative" type="text" name="data.initiative" value="{{data.initiative}}" data-dtype="String"/>
+                </td>
+                <td>
+                  <div class="energy flexrow">
+                    <input class="input-energy" type="number" name="data.energy.value" value="{{data.energy.value}}" data-dtype="Number"/>
+                    <div>/</div>
+                    <div>{{data.max_energy}}</div>
+                  </div>
+                </td>
+                <td>
+                  <input class="input-luck" type="number" name="data.luck" value="{{data.luck}}" data-dtype="Number"/>
+                </td>
+                <td>{{data.endurance}}</td>
+                <td>{{data.health}}</td>
+                <td>
+                  <input class="input-wither" type="number" name="data.wither" value="{{data.wither}}" data-dtype="Number"/>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </header>
+
+    {{!-- Sheet Tab Navigation --}}
+    <nav class="sheet-tabs tabs" data-group="primary">
+        <a class="item" data-tab="description">Description</a>
+        <a class="item active" data-tab="attributes">Attributs</a>
+        <a class="item" data-tab="weapons">Armes</a>
+        <a class="item" data-tab="skills">Compétences</a>
+        <a class="item" data-tab="combat">BASTON</a>
+    </nav>
+
+    {{!-- Sheet Body --}}
+    <section class="sheet-body">
+
+        {{!-- Biography Tab --}}
+        <div class="tab biography" data-group="primary" data-tab="description">
+            {{editor content=data.biography target="data.biography" button=true owner=owner editable=editable}}
+        </div>
+
+        {{!-- Characteristics Tab --}}
+        <div class="tab attributes" data-group="primary" data-tab="attributes">
+          <section class="elements">
+            <div class="header">
+              <div class="title">Caractéristiques</div>
+            </div>
+            <table>
+              <tr class="element-header">
+                <th></th>
+                <th>feu</th>
+                <th>terre</th>
+                <th>air</th>
+                <th>eau</th>
+                <th></th>
+              </tr>
+            {{#with data as |data|}}
+              {{#each data.characteristics as |elements type|}}
+                <tr>
+                  <th class="types type-header">{{lookup ../../config.charac_to_french type}}</th>
+                  {{#each elements as |value element|}}
+                    <td>
+                      <div class="charac" data-type={{type}} data-element={{element}}>
+                        <input class="charvalue" type="number" name="data.characteristics.{{type}}.{{element}}" value="{{value}}" data-dtype="Number" data-roll="d10+@characteristics.{{type}}.{{element}}"/>
+                        <a class="rollable"><i class="fas fa-dice"></i></a>
+                      </div>
+                    </td>
+                  {{/each}}
+                  <td class="type-total">{{lookup data.totals @key}}</td>
+                </tr>
+              {{/each}}
+            {{/with}}
+              <tr>
+                <td></td>
+                <td class="element-total">{{data.totals.fire}}</td>
+                <td class="element-total">{{data.totals.earth}}</td>
+                <td class="element-total">{{data.totals.air}}</td>
+                <td class="element-total">{{data.totals.water}}</td>
+                <td class="characs-total">{{data.full_total}}</td>
+              </tr>
+            </table>
+          </section>
+          <section class="health-section">
+            <div class="header">
+              <div class="title">Santé</div>
+              <a class="hp-controls raz rollable">RaZ</a>
+            </div>
+            <div class="hp-controls damage-control flexrow">
+              <div class="damage-penetration flexrow">
+                <label for="damage-penetration-input">Pénétration</label>
+                <input id="damage-penetration-input" name="damage-penetration-input" type="number" {{#ifEquals damageControlPenetration 0}}value=""{{else}}value="{{damageControlPenetration}}"{{/ifEquals}} min="1" data-type="penetration"/>
+              </div>
+              <div class="damage-value flexrow">
+                <label for="damage-value-input">Dégâts</label>
+                <input id="damage-value-input" name="damage-value-input" type="number" {{#ifEquals damageControlDamage 0}}value=""{{else}}value="{{damageControlDamage}}"{{/ifEquals}} min="1" data-type="damage"/>
+              </div>
+              <a class="rollable">Infliger</a>
+            </div>
+            <table class="table-health">
+              {{#each data.hit-points as |points level|}}
+                <tr class="hit-points-line" data-level="{{level}}">
+                  {{#ifEquals @index 0}}
+                    <th class="level-endurance">{{math (math @index '+' 1) '*' ../data.endurance}} - {{math (math @index '+' 2) '*' ../data.endurance}}</th>
+                  {{else}}
+                    {{#ifEquals @index 4}}
+                      <th class="level-endurance">{{math (math (math @index '+' 1) '*' ../data.endurance) '+' 1}}</th>
+                    {{else}}
+                      <th class="level-endurance">{{math (math (math @index '+' 1) '*' ../data.endurance) '+' 1}} - {{math (math @index '+' 2) '*' ../data.endurance}}</th>
+                    {{/ifEquals}}
+                  {{/ifEquals}}
+                  {{#with ../data.health as |h|}}
+                    {{#each points as |damage|}}
+                      <td class="hp-cell tooltip">
+                        {{#ifEquals damage 0}}
+                          <input class="hp-input" name="hp-input-{{level}}-{{@index}}" type="number" value="" data-id="{{@index}}" min="0" max="{{math ../data.health '*' (math @index '+' 1)}}"/>
+                        {{else}}
+                          <input class="hp-input" name="hp-input-{{level}}-{{@index}}" type="number" value="{{damage}}" data-id="{{@index}}" min="0" max="{{math ../data.health '*' (math @index '+' 1)}}"/>
+                        {{/ifEquals}}
+
+                        <div class="tooltipcontent">
+                          Santé max : {{math h '*' level}}
+                        </div>
+                      </td>
+                    {{/each}}
+                  {{/with}}
+                  <td class="hp-cells-controls" data-level="{{level}}">
+                    <a class="hp-add rollable" title="Ajouter cellule" data-type="add"><i class="fas fa-plus"></i></a>
+                    <a class="hp-delete rollable" title="Supprimer cellule" data-type="delete"><i class="fas fa-trash"></i></a>
+                  </td>
+                </tr>
+              {{/each}}
+            </table>
+          </section>
+        </div>
+
+        {{!-- Weapons Tab --}}
+        <div class="tab weapons" data-group="primary" data-tab="weapons">
+          <table class="weapons-table">
+            <thead class="weapons-header">
+              <tr>
+                <th>Nom</th>
+                <th>Type</th>
+                <th>Poids</th>
+                <th>Dommages</th>
+                <th>Pénétration</th>
+                <th>Sonnant</th>
+                <th class="controls"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each actor.weapons as |weapon w|}}
+                <tr class="weapon" data-weapon-id="{{weapon._id}}">
+                  <td>
+                    <input class="weapon-input weapon-name" name="input-weapon-name-{{w}}" type="text" value="{{weapon.name}}" data-input-type="name" {{#if weapon.data.locked}}readonly{{/if}}/>
+                  </td>
+                  <td>
+                    {{#if weapon.data.locked}}
+                      <input class="weapon-input weapon-type" type="text" value="{{weapon.data.type}}" data-input-type="type" readonly/>
+                    {{else}}
+                      <select class="weapon-input weapon-type" name="select-weapon-type-{{w}}" data-input-type="type" {{#if weapon.data.locked}}readonly{{/if}}>
+                        {{#select weapon.data.type}}
+                          {{#each ../config.weapon_types as |label type|}}
+                            <option value="{{type}}">{{label}}</option>
+                          {{/each}}
+                        {{/select}}
+                      </select>
+                    {{/if}}
+                  </td>
+                  <td>
+                    <input class="weapon-input weapon-weight"  name="input-weapon-weight-{{w}}" type="number" value="{{weapon.data.weight}}" data-input-type="weight" data-dtype="Number"/>
+                  </td>
+                  <td>
+                    <input class="weapon-input weapon-damage"  name="input-weapon-damage-{{w}}" type="number" value="{{weapon.data.damage}}" data-input-type="damage"/>
+                  </td>
+                  <td>
+                    <input class="weapon-input weapon-penetration"  name="input-weapon-penetration-{{w}}"type="number" value="{{weapon.data.penetration}}" data-input-type="penetration"/>
+                  </td>
+                  <td>
+                    <input class="weapon-input weapon-stunning"  name="input-weapon-stunning-{{w}}" type="number" value="{{weapon.data.stunning}}" data-input-type="stunning"/>
+                  </td>
+                  <td class="controls">
+                    <div class="weapon-controls">
+                      {{!-- <a class="weapon-control rollable"><i class="fas fa-dice"></i></a> --}}
+                      <a class="weapon-control weapon-delete" title="Supprimer arme" data-type="weapon"><i class="fas fa-trash"></i></a>
+                    </div>
+                  </td>
+                </tr>
+              {{/each}}
+              <tr>
+                <td colspan="7">
+                  <div class="weapon-controls">
+                    <a class="weapon-control weapon-create" title="Ajouter arme" data-type="weapon"><i class="fas fa-plus"></i> Nouvelle arme</a>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        {{!-- Skills Tab --}}
+        <div class="tab skills" data-group="primary" data-tab="skills">
+          <h3>Coût total : {{actor.total_skill_points}}</h3>
+          <table class="skills-table">
+            <thead class="skills-header">
+              <tr>
+                <th>Nom</th>
+                <th>Niveau</th>
+                <th>Expertise</th>
+                <th>Caractéristique</th>
+                <th class="controls"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each actor.skills as |skill s|}}
+                <tr class="skill" data-skill-id="{{skill._id}}">
+                  <td>
+                    <input class="skill-input skill-name"  name="input-skill-name-{{s}}" type="text" value="{{skill.name}}" data-input-type="name"/>
+                  </td>
+                  <td>
+                    <input class="skill-input skill-level" name="input-skill-level-{{s}}" type="number" value="{{skill.data.level}}" data-input-type="level"/>
+                  </td>
+                  <td>
+                    <select class="skill-input skill-expertise" data-input-type="expertise">
+                      {{#select skill.data.expertise}}
+                        <option value="null">Aucune</option>
+                        {{#each ../config.expertises as |expertise e|}}
+                        <option value="{{e}}">{{expertise}}</option>
+                        {{/each}}
+                      {{/select}}
+                    </select>
+                  </td>
+                  <td>
+                    <select class="skill-input skill-charac" data-input-type="charac">
+                      {{#select skill.data.characteristic}}
+                        <option value="null">Aucune</option>
+                        {{#each ../config.characteristics as |charac c|}}
+                        <option value="{{c}}">{{charac}}</option>
+                        {{/each}}
+                      {{/select}}
+                    </select>
+                  </td>
+                  <td class="controls">
+                    <div class="skill-controls">
+                    <a class="skill-control rollable"><i class="fas fa-dice"></i></a>
+                    <a class="skill-control skill-delete" title="Supprimer compétence" data-type="skill"><i class="fas fa-trash"></i></a>
+                    </div>
+                  </td>
+                </tr>
+              {{/each}}
+              <tr>
+                <td colspan="5">
+                  <div class="skill-controls">
+                    <a class="skill-control skill-create" title="Ajouter compétence" data-type="skill"><i class="fas fa-plus"></i> Nouvelle compétence</a>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        {{!-- Combat --}}
+        <div class="tab combat" data-group="primary" data-tab="combat">
+          <section class="configuration">
+            <div class="header">
+              <div class="title">Configuration</div>
+            </div>
+            <div class="attack-type">
+              <label for="attack-input">Type d'attaque </label>
+              <select class="attack-input" id="attack-input" data-input-type="type">
+                {{#select attack_type}}
+                  {{#each config.weapon_types as |label type|}}
+                    <option value="{{type}}">{{label}}</option>
+                  {{/each}}
+                {{/select}}
+              </select>
+            </div>
+            <table class="combat-characs">
+              <thead>
+                <tr>
+                  <th class="charac-choice">Caractéristique</th>
+                  {{#each (lookup data.characteristics data.combat-charac) as |value element|}}
+                    <th>{{lookup ../config.charac_to_french element}}</th>
+                  {{/each}}
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="charac-choice">
+                    <select class="combat-charac-input" name="data.combat-charac">
+                      {{#select data.combat-charac}}
+                        {{#each data.characteristics as |characs c|}}
+                        <option value="{{c}}">{{lookup ../config.charac_to_french c}}</option>
+                        {{/each}}
+                      {{/select}}
+                    </select>
+                  </td>
+                  {{#each (lookup data.characteristics data.combat-charac) as |value element|}}
+                    <td class="charvalue">{{value}}</td>         
+                  {{/each}}
+                </tr>
+              </tbody>
+            </table>
+            <table class="combat-weapon">
+              <thead>
+                <tr>
+                  <th class="weapon-choice" rowspan="2">Arme</th>
+                  <th colspan="4">Attributs</th>
+                </tr>
+                <tr>
+                  <th>Poids</th>
+                  <th>Dommages</th>
+                  <th>Pénétration</th>
+                  <th>Sonnant</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="weapon-choice">
+                    <select class="combat-weapon-input" name="data.combat-weapon">
+                      {{#select data.combat-weapon}}
+                        <option value="null">Aucune</option>
+                        {{#each actor.weapons as |weapon w|}}
+                          <option value="{{weapon._id}}">{{weapon.name}}</option>
+                        {{/each}}
+                      {{/select}}
+                    </select>
+                  </td>
+                  <td class="charvalue">{{combat_weapon.data.data.weight}}</td>
+                  <td class="charvalue">{{combat_weapon.data.data.damage}}</td>
+                  <td class="charvalue">{{combat_weapon.data.data.penetration}}</td>
+                  <td class="charvalue">{{combat_weapon.data.data.stunning}}</td>
+                </tr>
+              </tbody>
+            </table>
+            <table class="combat-skill">
+              <thead>
+                <tr>
+                  <th class="skill-choice">Compétence</th>
+                  <th>Niveau</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="skill-choice">
+                    <select class="combat-skill-input" name="data.combat-skill">
+                      {{#select data.combat-skill}}
+                        <option value="null">Aucune</option>
+                        {{#each actor.skills as |skill s|}}
+                          <option value="{{skill._id}}">{{skill.name}}</option>
+                        {{/each}}
+                      {{/select}}
+                    </select>
+                  </td>
+                  {{#ifEquals data.combat-skill 'null'}}
+                    <td class="charvalue">0</td>
+                  {{else}}
+                    <td class="charvalue">{{combat_skill.data.data.level}}</td>
+                  {{/ifEquals}}
+                </tr>
+              </tbody>
+            </table>
+            <div class="combat-control flex-col">
+              <div class="combat-mod flexrow flex-group-left">
+                <label for="combat-mod-input" class="mod-label">Modificateur</label>
+                <input class="combat-mod-input" name="combat-mod-input" id="combat-mod-input" type="number" value="{{combat_mod}}"/>
+              </div>
+              <div class="combat-results flexrow">
+                <div class="combat-roll">
+                  <a class="rollable"><i class="fas fa-dice"></i> Lancer l'attaque</a>
+                </div>
+                <table class="roll-result">
+                  <thead>
+                    <tr>
+                      <th>Total</th>
+                      <th>NR</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <input class="combat-roll-input" name="combat-roll-input" id="combat-roll-input" type="number" value="{{combat_roll}}"/>
+                      </td>
+                      <td class="success-value">{{success_levels}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+          <section class="attacks">
+            <div class="header">
+              <div class="title">Attaques</div>
+            </div>
+            {{#each attacks as |attack name|}}
+              <div class="attack {{name}}-attack" data-name="{{name}}">
+                <div class="attack-name">Attaque {{lookup ../config.attack_names name}}</div>
+                <table class="attack-table">
+                  <tr>
+                    <td>
+                      <table>
+                        <tr>
+                          <th class="input-header">Précision</th>
+                          <td class="input-cell">
+                            <input class="success-input" name="success-input-precision-{{name}}" type="number" value="{{attack.precision.levels}}" data-type="precision"/>
+                          </td>
+                        </tr>
+                        <tr>
+                          <th class="value-header">Pénétration</th>
+                          <td class="value-cell">{{attack.precision.penetration}}</td>
+                        </tr>
+                        <tr>
+                        <th class="value-header">Fatigue</th>
+                        <td class="value-cell">{{attack.precision.fatigue}}</td>
+                        </tr>
+                      </table>
+                    </td>
+                    <td>
+                      <table>
+                        <tr>
+                          <th class="input-header">Puissance</th>
+                          <td class="input-cell">
+                            <input class="success-input" name="success-input-power-{{name}}" type="number" value="{{attack.power.levels}}" data-type="power"/>
+                          </td>
+                        </tr>
+                        <tr>
+                          <th class="value-header">Dommages</th>
+                          <td class="value-cell">{{attack.power.damage}}</td>
+                        </tr>
+                        <tr>
+                        <th class="value-header">Fatigue</th>
+                        <td class="value-cell">{{attack.power.fatigue}}</td>
+                        </tr>
+                      </table>
+                    </td>
+                    <td>
+                      <table>
+                        <tr>
+                          <th class="input-header">Etourdissant</th>
+                          <td class="input-cell">
+                            <input class="success-input" name="success-input-stunning-{{name}}" type="number" value="{{attack.stunning.levels}}" data-type="stunning"/>
+                          </td>
+                        </tr>
+                        <tr>
+                          <th class="value-header">Sonnant</th>
+                          <td class="value-cell">{{attack.stunning.stun}}</td>
+                        </tr>
+                        <tr>
+                        <th class="value-header">Fatigue</th>
+                        <td class="value-cell">{{attack.stunning.fatigue}}</td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+                <table class="attack-results-table">
+                  <tr>
+                    <th class="value-header" rowspan="2">Résultats</th>
+                    <th class="value-header">Pénétration</th>
+                    <th class="value-header">Dommages</th>
+                    <th class="value-header">Sonnant</th>
+                    <th class="value-header">Fatigue</th>
+                  </tr>
+                  <tr>
+                    <td class="value-cell">{{attack.results.penetration}}</td>
+                    <td class="value-cell">{{attack.results.damage}}</td>
+                    <td class="value-cell">{{attack.results.stunning}}</td>
+                    <td class="value-cell">{{attack.results.fatigue}}</td>
+                  </tr>
+                </table>
+              </div>
+            {{/each}}
+          </section>
+        </div>
+    </section>
+</form>
+

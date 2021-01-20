@@ -1,0 +1,108 @@
+{
+  "Actor": {
+    "types": ["character", "npc"],
+    "templates": {
+      "base": {
+        "characteristics": {
+          "physical": {
+            "fire": 0,
+            "earth": 0,
+            "air": 0,
+            "water": 0
+          },
+          "intellectual": {
+            "fire": 0,
+            "earth": 0,
+            "air": 0,
+            "water": 0
+          },
+          "social": {
+            "fire": 0,
+            "earth": 0,
+            "air": 0,
+            "water": 0
+          },
+          "spiritual": {
+            "fire": 0,
+            "earth": 0,
+            "air": 0,
+            "water": 0
+          },
+          "vitality": {
+            "fire": 0,
+            "earth": 0,
+            "air": 0,
+            "water": 0
+          }
+        },
+        "luck": 0,
+        "energy": {
+          "value": 10
+        },
+        "hit-points": {
+          "1":[
+            0, 0, 0
+          ],
+          "2":[
+            0, 0
+          ],
+          "3":[
+            0
+          ],
+          "4":[
+            0
+          ],
+          "5":[
+            0
+          ]
+        },
+        "wither": 0,
+        "initiative": "2d8",
+        "combat-charac": "physical",
+        "combat-skill": "null",
+        "combat-weapon": "null"
+      }
+    },
+    "character": {
+      "templates": ["base"],
+      "biography": "",
+      "attributes": {
+        "skill_points": {
+          "max": 1050,
+          "used": 0
+        }
+      }
+    },
+    "npc": {
+      "templates": ["base"]
+    }
+  },
+  "Item": {
+    "types": ["item", "skill", "weapon"],
+    "templates": {
+      "base": {
+        "description": "",
+        "locked": false
+      }
+    },
+    "item": {
+      "templates": ["base"],
+      "quantity": 1,
+      "weight": 0
+    },
+    "skill": {
+      "templates": ["base"],
+      "level": 0,
+      "expertise": "null",
+      "characteristic": "null"
+    },
+    "weapon": {
+      "templates": ["base"],
+      "weight": 0,
+      "type": "melee",
+      "damage": 0,
+      "penetration": 0,
+      "stunning": 0
+    }
+  }
+}

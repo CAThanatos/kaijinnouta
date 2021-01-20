@@ -1,0 +1,29 @@
+<div class="chat-card luck-roll-card" data-actor-id="{{actor._id}}" {{#if tokenId}}data-token-id="{{tokenId}}"{{/if}}>
+  <header class="card-header flexrow">
+    <h3 class="actor-name">{{name}} - Chance / Malchance</h3>
+  </header>
+
+  <div class="flexcol">
+    <table class="luck-table">
+        <tbody>
+            <tr>
+                <th colspan="2">Jet</th>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <a class="inline-roll inline-result" title="{{result.roll.formula}}" data-roll="{{result.rollJSON}}">
+                        <i class="fas fa-dice"></i>{{lookup result.roll.results 0}}
+                    </a>
+                </td>
+            <tr>
+                <th>Chance</th>
+                <th>Malchance</th>
+            </tr>
+            <tr>
+                <td class="roll-card">{{result.luck}}</td>
+                <td class="roll-card">{{result.misfortune}}</td>
+            </tr>
+        </tbody>
+    </table>
+  </div>
+</div>

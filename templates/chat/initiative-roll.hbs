@@ -1,0 +1,15 @@
+<div class="chat-card initiative-roll-card" data-actor-id="{{actor._id}}" {{#if tokenId}}data-token-id="{{tokenId}}"{{/if}}>
+    <header class="card-header flexrow">
+        <h3 class="actor-name">{{name}} - Initiative</h3>
+    </header>
+
+    <div class="dice-rolls flexcol">
+        {{#each dice as |die|}}
+            <div class="dice-line">
+                {{#each die.results as |result|}}
+                    <div class="{{die.classes}} {{result.classes}}">{{result.result}}</div>
+                {{/each}}
+            </div>
+        {{/each}}
+    </div>
+</div>

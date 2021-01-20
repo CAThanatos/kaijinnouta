@@ -1,0 +1,829 @@
+@import url("https://fonts.googleapis.com/css2?family=Martel:wght@400;800&family=Roboto:wght@300;400;500&display=swap");
+/* Global styles */
+.window-app {
+  font-family: "Roboto", sans-serif;
+}
+
+.rollable:hover, .rollable:focus {
+  color: #000;
+  text-shadow: 0 0 10px red;
+  cursor: pointer;
+}
+
+.grid,
+.grid-2col {
+  display: grid;
+  grid-column: span 2 / span 2;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 10px 0;
+  padding: 0;
+}
+
+.grid-3col {
+  grid-column: span 3 / span 3;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.grid-4col {
+  grid-column: span 4 / span 4;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.grid-5col {
+  grid-column: span 5 / span 5;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.grid-6col {
+  grid-column: span 5 / span 5;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.grid-7col {
+  grid-column: span 7 / span 7;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.grid-8col {
+  grid-column: span 8 / span 8;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+}
+
+.grid-9col {
+  grid-column: span 9 / span 9;
+  grid-template-columns: repeat(9, minmax(0, 1fr));
+}
+
+.grid-10col {
+  grid-column: span 10 / span 10;
+  grid-template-columns: repeat(10, minmax(0, 1fr));
+}
+
+.grid-11col {
+  grid-column: span 11 / span 11;
+  grid-template-columns: repeat(11, minmax(0, 1fr));
+}
+
+.grid-12col {
+  grid-column: span 12 / span 12;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+}
+
+.flex-group-center,
+.flex-group-left,
+.flex-group-right {
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  text-align: center;
+  padding: 5px;
+  border: 1px solid #999;
+}
+
+.flex-group-left {
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.flex-group-right {
+  -webkit-box-pack: end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.flex-center {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.flex-between {
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+/* Kaijin No Uta styles */
+/* .elements table {
+  table-layout: fixed;
+  width: 100%;
+} */
+
+/* Tooltip text */
+.tooltip .tooltipcontent {
+  font-family: sans-serif;
+  font-size: 11px;
+  font-weight: normal;
+  visibility: hidden;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  text-align: center;
+  padding: 5px;
+  border-radius: 6px;
+  line-height: 13px;
+  min-width: 128px;
+  width: 240px;
+  white-space: normal;
+  /* Position the tooltip text */
+  position: fixed;
+  z-index: 1;
+  /* Fade in tooltip */
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltipcontent {
+  visibility: visible;
+  pointer-events: none;
+  opacity: 1;
+}
+
+.table-health .tooltipcontent {
+  width: 128px;
+}
+
+section .header {
+  border-style: solid;
+  border-width: 1px 0px;
+  background-color: brown;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 5px;
+  margin: 8px 0px;
+}
+
+section .title {
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 1.25em;
+  color: #f0f0e0;
+  text-shadow: 1px 1px #000;
+}
+
+.header .rollable {
+  color: #f0f0e0;
+  font-weight: bold;
+  text-shadow: 1px 1px #000;
+}
+
+.header a:hover {
+  color:rgba(218, 131, 17, 0.5)
+}
+
+.hp-controls.damage-control {
+  align-items: center;
+}
+
+.damage-control div {
+  align-items: center;
+  padding: 0px 5px 0px 5px;
+}
+
+.damage-control label {
+  padding: 0px 5px 0px 0px;
+  font-weight: bold;
+}
+
+.damage-control .rollable {
+  text-align: right;
+  font-weight: bold;
+}
+
+.charname {
+  flex:3;
+}
+
+.skill-points-div {
+  flex:1;
+  margin-left: 10px;
+}
+
+/* .table-skill-points {
+} */
+
+.table-skill-points td {
+  text-align: center;
+}
+
+.table-skill-points input {
+  max-width: 40px;
+}
+
+div.skill-points {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.ressources-table th {
+  text-align: center;
+  width: 20%;
+}
+
+.ressources-table td {
+  text-align: center;
+  width: 20%;
+}
+
+tr.element-header {
+  background: rgba(0, 0, 0, 0.5);
+  color: #f0f0e0;
+  text-shadow: 1px 1px #000;
+}
+
+.element-header th {
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.element-total {
+  font-weight: bold;
+  text-align: center;
+}
+
+.characs-total {
+  font-weight: bold;
+  text-align: center;
+}
+
+.type-header {
+  font-weight: bold;
+  text-transform: uppercase;
+  text-align: left;
+  background: rgba(0, 0, 0, 0.5);
+  color: #f0f0e0;
+  text-shadow: 1px 1px #000;
+  padding-left: 5px;
+}
+
+.type-total {
+  font-weight: bold;
+  text-align: center;
+}
+
+.charac .charvalue {
+  text-align: center;
+  max-width: 40px;
+}
+
+div.charac {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.charac .rollable {
+  align-items: center;
+}
+
+.characs-total {
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+table.ressources-table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+.energy div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.input-initiative {
+  max-width: 40px;
+}
+
+.input-luck {
+  max-width: 40px;
+}
+
+.input-wither {
+  max-width: 40px;
+}
+
+section.health-section {
+  border: 1px 1px 1px 1px;
+}
+
+.table-health th.level-endurance {
+  min-width: 50px;
+}
+
+.table-health .hp-input {
+  text-align: center;
+}
+
+.table-health td.hp-cells-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.table-health .hp-cells-controls a {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.weapons-table td {
+  text-align: center;
+  align-items: center;
+}
+
+input.weapon-input {
+  max-width: 40px;
+}
+
+input.weapon-name {
+  max-width: 150px;
+}
+
+.skills-table td {
+  text-align: center;
+  align-items: center;
+}
+
+input.skill-input {
+  max-width: 40px;
+}
+
+input.skill-name {
+  max-width: 150px;
+}
+
+.skills h3 {
+  font-weight: bold;
+  margin: 0.25rem 0 0.5rem;
+}
+
+.attack-type label {
+  font-weight: bold;
+  font-size: 1.10em;
+  margin-right: 10px;
+}
+
+table.combat-characs {
+  table-layout: fixed;
+  width: 100%;
+}
+
+table.combat-characs td {
+  text-align: center;
+  align-items: center;
+  width: 15%;
+}
+
+table.combat-characs th {
+  text-align: center;
+  align-items: center;
+  width: 15%;
+}
+
+.combat-characs td.charvalue {
+  font-weight: bold;
+}
+
+table.combat-characs td.charac-choice {
+  text-align: left;
+  width: 40%;
+}
+
+.charac-choice select {
+  width: 125px;
+}
+
+table.combat-characs th.charac-choice {
+  text-align: left;
+  width: 40%;
+  padding-left:5px;
+}
+
+table.combat-weapon {
+  table-layout: fixed;
+  width: 100%;
+}
+
+table.combat-weapon td {
+  text-align: center;
+  align-items: center;
+  width: 60%;
+}
+
+.combat-weapon td.charvalue {
+  font-weight: bold;
+}
+
+table.combat-weapon td.weapon-choice {
+  text-align: left;
+  width: 40%;
+}
+
+.weapon-choice select {
+  width: 125px;
+}
+
+table.combat-weapon th.weapon-choice {
+  text-align: left;
+  width: 40%;
+  padding-left:5px;
+}
+
+table.combat-skill {
+  table-layout: fixed;
+  width: 100%;
+}
+
+table.combat-skill td {
+  text-align: center;
+  align-items: center;
+  width: 20%;
+}
+
+.combat-skill td.charvalue {
+  font-weight: bold;
+}
+
+table.combat-skill td.skill-choice {
+  text-align: left;
+  width: 80%;
+}
+
+.skill-choice select {
+  width: 125px;
+}
+
+table.combat-skill th.skill-choice {
+  text-align: left;
+  width: 80%;
+  padding-left:5px;
+}
+
+.mod-label {
+  font-weight: bold;
+}
+
+#combat-mod-input {
+  max-width: 60px;
+  text-align: center;
+}
+
+.combat-mod {
+  border-style: none;
+}
+
+.combat-control {
+  border-style: solid;
+  border-color: #999;
+  border-width: 1px;
+}
+
+.combat-roll {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.combat-roll a {
+  padding-left: 5px;
+}
+
+.roll-result {
+  flex: 2;
+  table-layout: fixed;
+  width: 100%;
+  margin-right: 4px;
+}
+
+table.roll-result td {
+  text-align: center;
+  align-items: center;
+  font-weight: bold;
+}
+
+.roll-result input {
+  max-width: 60px;
+}
+
+.attack {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #999;
+  margin: 5px 0px;
+}
+
+.attack-name {
+  font-weight: bold;
+  font-size: 1.25em;
+  padding-left: 5px;
+  padding-top: 5px;
+}
+
+/* .attack-table {
+  border-collapse: separate;
+  border-spacing: 5px;
+} */
+
+.attack-table .input-header {
+  text-align: left;
+}
+
+.attack-table .value-header {
+  text-align: left;
+}
+
+.attack-table .input-cell {
+  text-align: center;
+}
+
+.success-input {
+  margin-right: 5px;
+  max-width: 40px;
+}
+
+.attack-table .value-cell {
+  text-align: center;
+}
+
+.attack-results-table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+.attack-results-table .value-header {
+  width: 20%;
+  text-align: center;
+  font-weight: bold;
+  background: rgba(0, 0, 0, 0.5);
+  color: #f0f0e0;
+  text-shadow: 1px 1px #000;
+  }
+
+.attack-results-table td {
+  width: 20%;
+  text-align: center;
+  align-items: center;
+  font-weight: bold;
+}
+
+
+/* .chat-card .fake-inline-roll {
+  color: black;
+  text-shadow: none;
+  font-weight: normal;
+}
+.chat-card .inline-roll,
+.chat-card .fake-inline-roll {
+  flex: 0;
+  height: 100%;
+  padding: 1px 4px 0 4px;
+}
+
+.chat-card a.inline-result,
+.chat-card a.inline-result {
+  border-radius: 2px 2px 2px 0;
+} */
+
+.chat-card .luck-table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+.chat-card .luck-table td {
+  width: 50%;
+}
+
+
+.inline-roll i.fa-dice {
+  margin-right: 5px;
+}
+
+.chat-card td {
+  text-align: center;
+}
+
+.chat-card th {
+  background: rgba(0, 0, 0, 0.5);
+  color: #f0f0e0;
+  text-shadow: 1px 1px #000;
+  text-align: center;
+}
+
+.chat-card .roll-card {
+  font-weight: bold;
+}
+
+.dice-rolls .roll {
+  position: relative;
+  width: 24px;
+  line-height: 24px;
+  float: left;
+  margin-right: 1px;
+  background-image: url("../icons/svg/d6-grey.svg");
+  background-repeat: no-repeat;
+  background-size: 24px 24px;
+  font-size: 16px;
+  color: #000;
+  font-weight: bold;
+  text-align: center;
+}
+.dice-rolls .roll.d4 {
+  background-image: url("../icons/svg/d4-grey.svg");
+}
+.dice-rolls .roll.d6 {
+  background-image: url("../icons/svg/d6-grey.svg");
+}
+.dice-rolls .roll.d8 {
+  background-image: url("../icons/svg/d8-grey.svg");
+}
+.dice-rolls .roll.d10 {
+  background-image: url("../icons/svg/d10-grey.svg");
+}
+.dice-rolls .roll.d12 {
+  background-image: url("../icons/svg/d12-grey.svg");
+}
+.dice-rolls .roll.d20 {
+  background-image: url("../icons/svg/d20-grey.svg");
+}
+.dice-rolls .roll.min {
+  color: #aa0200;
+  filter: sepia(0.5) hue-rotate(-60deg);
+}
+.dice-rolls .roll.max {
+  color: #18520b;
+  filter: sepia(0.5) hue-rotate(60deg);
+}
+.dice-rolls .roll.discarded,
+.dice-rolls .roll.rerolled {
+  filter: sepia(0.5) contrast(0.75) opacity(0.4);
+}
+.dice-rolls .roll.exploded:before {
+  font-size: 8px;
+  font-family: "Font Awesome 5 Free";
+  content: "\f666";
+  position: absolute;
+  top: -8px;
+  right: 0px;
+}
+.dice-rolls .roll.success {
+  color: #18520b;
+  filter: sepia(0.5) hue-rotate(60deg);
+}
+.dice-rolls .roll.failure {
+  color: #aa0200;
+  filter: sepia(0.5) hue-rotate(-60deg);
+}
+.dice-line {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  justify-content: space-around;
+}
+
+/* Styles limited to boilerplate sheets */
+.boilerplate .item-form {
+  font-family: "Roboto", sans-serif;
+}
+
+.boilerplate .sheet-header {
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 210px;
+  flex: 0 0 210px;
+  overflow: hidden;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  margin-bottom: 10px;
+}
+
+.boilerplate .sheet-header .profile-img {
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 100px;
+  flex: 0 0 100px;
+  height: 100px;
+  margin-right: 10px;
+}
+
+.boilerplate .sheet-header .header-fields {
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+
+.boilerplate .sheet-header h1.charname {
+  height: 50px;
+  padding: 0px;
+  margin: 5px 0;
+  border-bottom: 0;
+}
+
+.boilerplate .sheet-header h1.charname input {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+.boilerplate .sheet-tabs {
+  -webkit-box-flex: 0;
+  -ms-flex: 0;
+  flex: 0;
+}
+
+.boilerplate .sheet-body,
+.boilerplate .sheet-body .tab,
+.boilerplate .sheet-body .tab .editor {
+  height: 100%;
+}
+
+.boilerplate .tox .tox-editor-container {
+  background: #fff;
+}
+
+.boilerplate .tox .tox-edit-area {
+  padding: 0 8px;
+}
+
+.boilerplate .resource-label {
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.boilerplate .tabs {
+  height: 40px;
+  border-top: 1px solid #AAA;
+  border-bottom: 1px solid #AAA;
+}
+
+.boilerplate .tabs .item {
+  line-height: 40px;
+  font-weight: bold;
+}
+
+.boilerplate .tabs .item.active {
+  text-decoration: underline;
+  text-shadow: none;
+}
+
+.boilerplate .items-list {
+  list-style: none;
+  margin: 7px 0;
+  padding: 0;
+  overflow-y: auto;
+}
+
+.boilerplate .items-list .item-header {
+  font-weight: bold;
+}
+
+.boilerplate .items-list .item {
+  height: 30px;
+  line-height: 24px;
+  padding: 3px 0;
+  border-bottom: 1px solid #BBB;
+}
+
+.boilerplate .items-list .item .item-image {
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 24px;
+  flex: 0 0 24px;
+  margin-right: 5px;
+}
+
+.boilerplate .items-list .item img {
+  display: block;
+}
+
+.boilerplate .items-list .item-name {
+  margin: 0;
+}
+
+.boilerplate .items-list .item-controls {
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 86px;
+  flex: 0 0 86px;
+  text-align: right;
+}
